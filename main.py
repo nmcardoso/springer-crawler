@@ -26,8 +26,10 @@ def main():
     
     for i, _id in enumerate(ids):
       title = get_title(f'http://doi.org/{_id}')
+      sanitized_title = str(title).strip().replace(' ', '_')
+      sanitized_title = re.sub(r'(?u)[^-\w.]', '', sanitized_title)
       print(f'[{i + 1}/{len(ids)}]: Downloading {title}') 
-      download(f'https://link.springer.com/content/pdf/{_id}.pdf', f'outputs/{title}.pdf')
+      download(f'https://link.springer.com/content/pdf/{_id}.pdf', f'outputs/{sanitized_title}.pdf')
 
 if __name__ == '__main__':
   main()
